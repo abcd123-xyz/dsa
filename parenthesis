@@ -1,0 +1,40 @@
+// Equal valid parenthesis in C
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void backtrack(char *current, int pos, int open, int close, int n) {
+    if (pos == 2 * n) {
+        current[pos] = '\0'; 
+        printf("%s\n", current);
+        return;
+    }
+
+    if (open < n) {
+        current[pos] = '(';
+        backtrack(current, pos + 1, open + 1, close, n);
+    }
+
+    if (close < open) {
+        current[pos] = ')';
+        backtrack(current, pos + 1, open, close + 1, n);
+    }
+}
+
+void generateParent(int n) {
+   
+    char *current = (char *)malloc((2 * n + 1) * sizeof(char));
+    backtrack(current, 0, 0, 0, n);
+    free(current);
+}
+
+int main() {
+    int n;
+    printf("Enter number of pairs: ");
+    scanf("%d", &n);
+
+    printf("Valid combinations are:\n");
+    generateParent(n);
+
+    return 0;
+}
